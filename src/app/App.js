@@ -13,7 +13,6 @@ const App = () => {
   //   <Switch>
   //     <Route path="/login" component={Login}/>
   //     <Route path="/register" component={Register}/>
-  //     <Route exact path="/" component={Home}/>
   //     <Redirect to="/"/>
   //   </Switch>
   // );
