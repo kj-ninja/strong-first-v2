@@ -1,16 +1,11 @@
 import React from 'react';
 import './Layout.scss';
+import Header from '../components/Header/Header';
 
 const Layout = (props) => {
   return (
     <>
-      <nav>
-        <ul>
-          <li>
-            <a href="#">Home</a>
-          </li>
-        </ul>
-      </nav>
+      <Header/>
 
       <main className="content">
         {props.children}
