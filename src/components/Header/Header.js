@@ -1,5 +1,5 @@
 import React from 'react';
-import Navigation from "./Navigation/Navigation";
+import Navigation from "./Navigation";
 import './Header.scss';
 import {NavLink} from "react-router-dom";
 
