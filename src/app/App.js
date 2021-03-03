@@ -1,13 +1,9 @@
 import React from 'react';
-import {
-  Switch,
-  Route,
-} from "react-router-dom";
+import { Switch, Route } from 'react-router-dom';
 import './App.scss';
-import Layout from "../layout/Layout";
+import Layout from '../layout/Layout';
 
 const App = () => {
-
   // TODO dodac logike czy user jest zalogowany jesli nie renderujemy ponizsze komponenty
   // let routes = (
   //   <Switch>
@@ -41,6 +37,6 @@ const App = () => {
       </Layout>
     </>
   );
-}
+};
 
 export default App;
