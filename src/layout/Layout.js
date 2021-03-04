@@ -5,11 +5,9 @@ import Header from '../components/Header/Header';
 const Layout = (props) => {
   return (
     <>
-      <Header/>
+      <Header currentUser={props.currentUser} />
 
-      <main className="content">
-        {props.children}
-      </main>
+      <main className='content'>{props.children}</main>
     </>
   );
 };

@@ -1,9 +1,29 @@
-import React from 'react';
-import { Switch, Route } from 'react-router-dom';
-import './App.scss';
+import React, { useState, useEffect } from 'react';
+import { Switch, Route, Link } from 'react-router-dom';
+import { auth, createUserProfileDocument } from '../firebase/firebase.utils';
 import Layout from '../layout/Layout';
+import Login from '../components/Login/Login';
+import './App.scss';
 
 const App = () => {
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    auth.onAuthStateChanged(async (userAuth) => {
+      if (userAuth) {
+        const userRef = await createUserProfileDocument(userAuth);
+
+        userRef.onSnapshot((snapShot) => {
+          setCurrentUser({
+            id: snapShot.id,
+            ...snapShot.data(),
+          });
+        });
+      }
+      setCurrentUser(userAuth);
+    });
+  }, []);
+
   // TODO dodac logike czy user jest zalogowany jesli nie renderujemy ponizsze komponenty
   // let routes = (
   //   <Switch>
@@ -32,8 +52,8 @@ const App = () => {
       {/*<Layout>*/}
       {/*  {routes}*/}
       {/*</Layout>*/}
-      <Layout>
-
+      <Layout currentUser={currentUser}>
+        
       </Layout>
     </>
   );

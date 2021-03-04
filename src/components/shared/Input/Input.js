@@ -4,13 +4,7 @@ import './Input.scss';
 const Input = ({ setValueToState, label, ...otherProps }) => {
   return (
     <div className='container'>
-      <input
-        className='container__input'
-        onChange={(e) => {
-          setValueToState(e.target.value);
-        }}
-        {...otherProps}
-      />
+      <input className='container__input' {...otherProps} />
       {label ? (
         <label
           className={`${

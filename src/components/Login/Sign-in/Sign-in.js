@@ -1,41 +1,61 @@
 import React, { useState } from 'react';
-import './Sign-in.scss';
+import { auth, signInWithGoogle } from '../../../firebase/firebase.utils';
 import Input from '../../shared/Input/Input';
-import { signInWithGoogle } from '../../../firebase/firebase.utils';
+import Button from '../../shared/Button/Button';
+import './Sign-in.scss';
 
 const SignIn = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [userCredentials, setUserCredentials] = useState({
+    // displayName: '',
+    email: '',
+    password: '',
+    // confirmPassword: '',
+  });
 
-  const handleSumbit = (event) => {
+  const { email, password } = userCredentials;
+
+  const handleSumbit = async (event) => {
     event.preventDefault();
 
-    setEmail('');
-    setPassword('');
+    try {
+      await auth.signInWithEmailAndPassword(email, password);
+      setUserCredentials({ ...userCredentials, email: '', password: '' });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    setUserCredentials({ ...userCredentials, [name]: value });
   };
 
   return (
     <div className='sign-in'>
       <h2>It great to have you back on your next training session</h2>
-      <span>Sign in and let's do this</span>
+      <p>Sign in and let's do this</p>
       <form onSubmit={handleSumbit}>
         <Input
           name='email'
           type='email'
           label='email'
           value={email}
-          setValueToState={setEmail}
-          required
+          onChange={handleChange}
+          // required
         />
         <Input
           name='password'
           type='password'
           label='Password'
           value={password}
-          setValueToState={setPassword}
-          required
+          onChange={handleChange}
+          // required
         />
-        <input onClick={signInWithGoogle} value='Zaloguj się' />
+        <div className='sign-in__buttons'>
+          <Button value='submit'>Zaloguj się</Button>
+          <Button onClick={signInWithGoogle}>Zaloguj z Google</Button>
+        </div>
       </form>
     </div>
   );
