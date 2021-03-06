@@ -21,7 +21,6 @@ const Calendar = () => {
   useEffect(()=> {
     dispatch(getCalendarInitialData(today));
     dispatch(daysOfWeek());
-
   }, [today, dispatch]);
 
   const getDay = (value) => moment(value).format('DD');
@@ -30,6 +29,8 @@ const Calendar = () => {
   const getMonthData = () => {
     if (calendarStructure.length) {
       const formattedMonth = moment(pickedMonth).startOf('month').format('YYYY-MM-DD');
+      console.log('month ', formattedMonth);
+      console.log('structure ', calendarStructure[0].month);
       return calendarStructure.find((item) => item.month === formattedMonth).dates;
     }
     return [];

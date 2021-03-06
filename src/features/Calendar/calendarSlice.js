@@ -38,7 +38,6 @@ export const calendarSLice = createSlice({
       ];
     },
     setPickedMonth(state, data) {
-      console.log(data.payload);
       state.pickedMonth = data.payload;
     },
     setMonthData(state, data) {
@@ -63,10 +62,9 @@ export const daysOfWeek = () => dispatch => {
   dispatch(setMonthData([...daysOfWeek, sunday]));
 };
 
-export const changeMonth = (direction) => (dispatch, state) =>{
-  console.log(state);
-  const newMonth = generateNewMonthDate(direction, state.pickedMonth);
-  const monthExist = state.calendarStructure.some((item) => item.month === newMonth);
+export const changeMonth = (direction, calendarStructure, pickedMonth) => dispatch => {
+  const newMonth = generateNewMonthDate(direction, pickedMonth);
+  const monthExist = calendarStructure.some((item) => item.month === newMonth);
 
   if (!monthExist) {
     dispatch(setCalendarStructure, {
@@ -74,5 +72,5 @@ export const changeMonth = (direction) => (dispatch, state) =>{
     });
   }
 
-  dispatch(setPickedMonth, newMonth);
+  dispatch(setPickedMonth(newMonth));
 };
