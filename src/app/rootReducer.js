@@ -1,8 +1,8 @@
 import { combineReducers } from '@reduxjs/toolkit'
-import authSlice from '../auth/authSlice';
+import calendarSLice from "../features/Calendar/calendarSlice";
 
 const rootReducer = combineReducers({
-  auth: authSlice,
+  calendar: calendarSLice,
 });
 
 export default rootReducer;
