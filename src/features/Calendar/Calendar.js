@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import moment from 'moment';
 import {useSelector, shallowEqual, useDispatch} from "react-redux";
-import {setPickedDate, getCalendarInitialData, daysOfWeek} from "./calendarSlice";
+import {setPickedDate, getCalendarInitialData, getDaysOfWeek} from "./calendarSlice";
 import './Calendar.scss';
 
 const Calendar = () => {
@@ -20,7 +20,7 @@ const Calendar = () => {
 
   useEffect(()=> {
     dispatch(getCalendarInitialData(today));
-    dispatch(daysOfWeek());
+    dispatch(getDaysOfWeek());
   }, [today, dispatch]);
 
   const getDay = (value) => moment(value).format('DD');
@@ -30,13 +30,13 @@ const Calendar = () => {
     if (calendarStructure.length) {
       const formattedMonth = moment(pickedMonth).startOf('month').format('YYYY-MM-DD');
       console.log('month ', formattedMonth);
-      console.log('structure ', calendarStructure[0].month);
+      console.log('structure ', calendarStructure);
       return calendarStructure.find((item) => item.month === formattedMonth).dates;
     }
     return [];
   };
 
-  const datePickHandle = (day, dayIndex) => {
+  const handleDatePick = (day, dayIndex) => {
     console.log('Yo kliknales w dzien: ', day);
     const isDatePicked = pickedDate === day.date;
     if (!isDatePicked && !day.isDiffMonth) {
@@ -67,7 +67,7 @@ const Calendar = () => {
       {getMonthData().map((day, index) => (
         <div className="calendar__item"
              key={day.date}
-             onClick={() => datePickHandle(day, index)}>
+             onClick={() => handleDatePick(day, index)}>
 
           <div className="calendar__item__bottom">
               <span className="item-bottom__day">

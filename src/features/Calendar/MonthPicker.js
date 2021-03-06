@@ -17,21 +17,21 @@ const MonthPicker = () => {
     shallowEqual
   );
 
-  const handleMonth = (direction) => {
+  const getMonth = (value) => moment(value).format('MMMM YYYY');
+
+  const handleMonthChange = (direction) => {
     dispatch(changeMonth(direction, calendarStructure, pickedMonth));
   };
-
-  const getMonth = (value) => moment(value).format('MMMM YYYY');
 
   return (
     <div className="month-picker">
       <div className="month-picker__controls">
 
-        <i className="fas fa-caret-left" onClick={() => handleMonth('previous')}/>
+        <i className="fas fa-caret-left" onClick={() => handleMonthChange('previous')}/>
 
         <span className="month-picker__controls--month"> {getMonth(pickedMonth)} </span>
 
-        <i className="fas fa-caret-right" onClick={() => handleMonth('next')}/>
+        <i className="fas fa-caret-right" onClick={() => handleMonthChange('next')}/>
       </div>
 
     </div>
