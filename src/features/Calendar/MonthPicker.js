@@ -1,7 +1,7 @@
 import React from 'react';
-import moment from "moment";
 import {useSelector, useDispatch, shallowEqual} from "react-redux";
 import {changeMonth} from "./calendarSlice";
+import {getMonth} from "./helpers";
 import './MonthPicker.scss';
 
 const MonthPicker = () => {
@@ -9,15 +9,11 @@ const MonthPicker = () => {
   const {calendarStructure, pickedMonth} = useSelector((state) => {
       return {
         calendarStructure: state.calendar.calendarStructure,
-        pickedDate: state.calendar.pickedDate,
         pickedMonth: state.calendar.pickedMonth,
-        monthData: state.calendar.monthData,
       }
     },
     shallowEqual
   );
-
-  const getMonth = (value) => moment(value).format('MMMM YYYY');
 
   const handleMonthChange = (direction) => {
     dispatch(changeMonth(direction, calendarStructure, pickedMonth));

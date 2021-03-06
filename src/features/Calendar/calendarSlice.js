@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 import moment from 'moment';
-import { createCalendarStructure, generateNewMonthDate } from '../../utils/calendar';
+import { createCalendarStructure, generateNewMonthDate } from './helpers';
 
 export const calendarSLice = createSlice({
   name: 'calendar',
@@ -31,19 +31,19 @@ export const calendarSLice = createSlice({
       state.pickedDate = date;
       state.calendarStructure[monthIndex].dates[dayIndex].isPicked = true;
     },
-    setCalendarStructure(state, data) {
-      console.log('data: ', data.payload);
+    setCalendarStructure(state, {payload}) {
+      console.log('calendar data: ', payload);
+      // do rozkminienia
       state.calendarStructure = [
         ...state.calendarStructure,
-        data.payload
+        payload
       ];
     },
-    setPickedMonth(state, data) {
-      console.log(data);
-      state.pickedMonth = data.payload;
+    setPickedMonth(state, {payload}) {
+      state.pickedMonth = payload;
     },
-    setMonthData(state, data) {
-      state.monthData = data.payload;
+    setMonthData(state, {payload}) {
+      state.monthData = payload;
     },
   },
 });

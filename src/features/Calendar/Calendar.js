@@ -1,16 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import moment from 'moment';
 import {useSelector, shallowEqual, useDispatch} from "react-redux";
-import {setPickedDate, getCalendarInitialData, getDaysOfWeek} from "./calendarSlice";
+import {getCalendarInitialData, getDaysOfWeek} from "./calendarSlice";
+import {getDay, cutWeekDay, isToday, isNormalDay} from "./helpers";
 import './Calendar.scss';
 
 const Calendar = () => {
   const dispatch = useDispatch();
   const [today] = useState(moment().format('YYYY-MM-DD'));
-  const {calendarStructure, pickedDate, pickedMonth, monthData} = useSelector((state) => {
+  const {calendarStructure, pickedMonth, monthData} = useSelector((state) => {
       return {
         calendarStructure: state.calendar.calendarStructure,
-        pickedDate: state.calendar.pickedDate,
         pickedMonth: state.calendar.pickedMonth,
         monthData: state.calendar.monthData,
       }
@@ -23,36 +23,16 @@ const Calendar = () => {
     dispatch(getDaysOfWeek());
   }, [today, dispatch]);
 
-  const getDay = (value) => moment(value).format('DD');
-  const cutWeekDay = (value) => value.substring(0, 3);
-
   const getMonthData = () => {
     if (calendarStructure.length) {
       const formattedMonth = moment(pickedMonth).startOf('month').format('YYYY-MM-DD');
-      console.log('month ', formattedMonth);
-      console.log('structure ', calendarStructure);
       return calendarStructure.find((item) => item.month === formattedMonth).dates;
     }
     return [];
   };
 
-  const handleDatePick = (day, dayIndex) => {
+  const handleDatePick = (day) => {
     console.log('Yo kliknales w dzien: ', day);
-    const isDatePicked = pickedDate === day.date;
-    if (!isDatePicked && !day.isDiffMonth) {
-      setPickedDate({
-        date: day.date,
-        dayIndex,
-      });
-    }
-  };
-
-  const isToday = (date) => {
-    return date === moment().format('YYYY-MM-DD');
-  };
-
-  const isNormalDay = (day) => {
-    return !day.isDiffMonth && !day.isPicked;
   };
 
   return (
