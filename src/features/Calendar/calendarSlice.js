@@ -11,8 +11,8 @@ export const calendarSLice = createSlice({
     daysOfWeek: [],
   },
   reducers: {
-    setPickedDate(state, data) {
-      const { date, dayIndex } = data;
+    setPickedDate(state, {payload}) {
+      const { date, dayIndex } = payload;
       let monthDate = moment(date).startOf('month').format('YYYY-MM-DD');
       const monthIndex = state.calendarStructure.findIndex((item) => item.month === monthDate);
       const pickedDateExist = state.pickedDate.length;

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import moment from 'moment';
 import {useSelector, shallowEqual, useDispatch} from "react-redux";
-import {getCalendarInitialData} from "./calendarSlice";
+import {getCalendarInitialData, setPickedDate} from "./calendarSlice";
 import {getDay, cutWeekDay, isToday, isNormalDay, getMonthData} from "./helpers";
 import bindClassesDynamically from '../../utils/classBinder';
 import './Calendar.scss';
@@ -9,11 +9,12 @@ import './Calendar.scss';
 const Calendar = () => {
   const dispatch = useDispatch();
   const [today] = useState(moment().format('YYYY-MM-DD'));
-  const {calendarStructure, pickedMonth, daysOfWeek} = useSelector((state) => {
+  const {calendarStructure, pickedMonth, daysOfWeek, pickedDate} = useSelector((state) => {
       return {
         calendarStructure: state.calendar.calendarStructure,
         pickedMonth: state.calendar.pickedMonth,
         daysOfWeek: state.calendar.daysOfWeek,
+        pickedDate: state.calendar.pickedDate,
       }
     },
     shallowEqual
@@ -23,9 +24,12 @@ const Calendar = () => {
     dispatch(getCalendarInitialData(today));
   }, [today, dispatch]);
 
-
-  const handleDatePick = (day) => {
+  const handleDatePick = (day, dayIndex) => {
     console.log('Yo kliknales w dzien: ', day);
+    const isDatePicked = pickedDate === day.date;
+    if (!isDatePicked && !day.isDiffMonth) {
+      dispatch(setPickedDate({date: day.date, dayIndex}));
+    }
   };
 
   return (
