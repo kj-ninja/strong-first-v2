@@ -1,0 +1,4 @@
+- przeniesc metode generowania dni do reduxa lub helpera?
+- ogarnac metode do wybierania dni
+- ostylowac month picker
+- dodac logike do month pickera (zmienianie lat na clicka zmiana designu?)

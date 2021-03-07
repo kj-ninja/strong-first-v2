@@ -8,7 +8,7 @@ export const calendarSLice = createSlice({
     pickedDate: '',
     pickedMonth: '',
     calendarStructure: [],
-    monthData: [],
+    daysOfWeek: [],
   },
   reducers: {
     setPickedDate(state, data) {
@@ -33,7 +33,6 @@ export const calendarSLice = createSlice({
     },
     setCalendarStructure(state, {payload}) {
       console.log('calendar data: ', payload);
-      // do rozkminienia
       state.calendarStructure = [
         ...state.calendarStructure,
         payload
@@ -42,26 +41,23 @@ export const calendarSLice = createSlice({
     setPickedMonth(state, {payload}) {
       state.pickedMonth = payload;
     },
-    setMonthData(state, {payload}) {
-      state.monthData = payload;
+    setDaysOfWeek(state, {payload}) {
+      state.daysOfWeek = payload;
     },
   },
 });
 
-export const {setPickedDate, setCalendarStructure, setPickedMonth, setMonthData} = calendarSLice.actions;
+export const {setPickedDate, setCalendarStructure, setPickedMonth, setDaysOfWeek} = calendarSLice.actions;
 export default calendarSLice.reducer;
 
 export const getCalendarInitialData = (today) => dispatch => {
   const structure = createCalendarStructure(today);
-
-  dispatch(setPickedMonth(today));
-  dispatch(setCalendarStructure(structure));
-};
-
-export const getDaysOfWeek = () => dispatch => {
   const daysOfWeek = moment.weekdays();
   const sunday = daysOfWeek.shift();
-  dispatch(setMonthData([...daysOfWeek, sunday]));
+
+  dispatch(setDaysOfWeek([...daysOfWeek, sunday]));
+  dispatch(setPickedMonth(today));
+  dispatch(setCalendarStructure(structure));
 };
 
 export const changeMonth = (direction, calendarStructure, pickedMonth) => dispatch => {
