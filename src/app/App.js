@@ -21,11 +21,8 @@ const App = (props) => {
             id: snapShot.id,
             ...snapShot.data(),
           });
-
-          console.log(snapShot.id);
         });
       }
-
       props.setCurrentUser(userAuth);
     });
   }, []);
@@ -70,5 +67,3 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(null, mapDispatchToProps)(App);
-
-
