@@ -1,7 +1,7 @@
 import React from 'react';
 import './Input.scss';
 
-const Input = ({ setValueToState, label, ...otherProps }) => {
+const Input = ({label, ...otherProps }) => {
   return (
     <div className='container'>
       <input className='container__input' {...otherProps} />

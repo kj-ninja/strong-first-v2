@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {
   auth,
   createUserProfileDocument,
-} from '../../../firebase/firebase.utils';
+} from '../../../firebase/firebaseClient';
 import Input from '../../shared/Input/Input';
 import Button from '../../shared/Button/Button';
 import './Sign-up.scss';

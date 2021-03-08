@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { auth, signInWithGoogle } from '../../../firebase/firebase.utils';
+import { auth, signInWithGoogle } from '../../../firebase/firebaseClient';
 import Input from '../../shared/Input/Input';
 import Button from '../../shared/Button/Button';
 import './Sign-in.scss';

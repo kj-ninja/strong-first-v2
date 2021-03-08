@@ -3,7 +3,7 @@ import Navigation from './Navigation';
 import './Header.scss';
 import { NavLink } from 'react-router-dom';
 
-const Header = ({ currentUser }) => {
+const Header = () => {
   return (
     <header className='header'>
       <div className='header__container'>
@@ -11,7 +11,7 @@ const Header = ({ currentUser }) => {
           <NavLink to='/'>StrongFirst</NavLink>
         </h1>
 
-        <Navigation currentUser={currentUser} />
+        <Navigation />
       </div>
     </header>
   );

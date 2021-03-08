@@ -1,26 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Switch, Route, Link } from 'react-router-dom';
-import { auth, createUserProfileDocument } from '../firebase/firebase.utils';
+import { auth, createUserProfileDocument } from '../firebase/firebaseClient';
+import { setCurrentUser } from '../redux/user/user.actions';
+import { Provider } from 'react-redux';
+import { connect } from 'react-redux';
+import store from '../redux/store';
 import Layout from '../layout/Layout';
 import Login from '../components/Login/Login';
 import './App.scss';
+import { render } from '@testing-library/react';
 
-const App = () => {
-  const [currentUser, setCurrentUser] = useState(null);
-
+const App = (props) => {
   useEffect(() => {
     auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);
 
         userRef.onSnapshot((snapShot) => {
-          setCurrentUser({
+          props.setCurrentUser({
             id: snapShot.id,
             ...snapShot.data(),
           });
+
+          console.log(snapShot.id);
         });
       }
-      setCurrentUser(userAuth);
+
+      props.setCurrentUser(userAuth);
     });
   }, []);
 
@@ -48,15 +54,21 @@ const App = () => {
   // }
 
   return (
-    <>
+    <Provider store={store}>
       {/*<Layout>*/}
       {/*  {routes}*/}
       {/*</Layout>*/}
-      <Layout currentUser={currentUser}>
-        
+      <Layout>
+        <Login />
       </Layout>
-    </>
+    </Provider>
   );
 };
 
-export default App;
+const mapDispatchToProps = (dispatch) => ({
+  setCurrentUser: (user) => dispatch(setCurrentUser(user)),
+});
+
+export default connect(null, mapDispatchToProps)(App);
+
+
