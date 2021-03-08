@@ -51,14 +51,14 @@ const App = (props) => {
   // }
 
   return (
-    <Provider store={store}>
+    <>
       {/*<Layout>*/}
       {/*  {routes}*/}
       {/*</Layout>*/}
       <Layout>
         <Login />
       </Layout>
-    </Provider>
+    </>
   );
 };
 
