@@ -17,7 +17,7 @@ const SignUp = () => {
 
   const { displayName, email, password, confirmPassword } = userCredentials;
 
-  const handleSumbit = async (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     if (password !== confirmPassword) {
       alert('hasła są niezgodne');
@@ -53,7 +53,7 @@ const SignUp = () => {
     <div className='sign-up'>
       <h2>Marzy mi się założenie konta</h2>
       <p>Rejestracja</p>
-      <form onSubmit={handleSumbit}>
+      <form onSubmit={handleSubmit}>
         <Input
           name='displayName'
           type='text'
@@ -65,7 +65,7 @@ const SignUp = () => {
         <Input
           name='email'
           type='email'
-          label='email'
+          label='Email'
           value={email}
           onChange={handleChange}
           // required

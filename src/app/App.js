@@ -8,7 +8,6 @@ import store from '../redux/store';
 import Layout from '../layout/Layout';
 import Login from '../components/Login/Login';
 import './App.scss';
-import { render } from '@testing-library/react';
 
 const App = (props) => {
   useEffect(() => {
