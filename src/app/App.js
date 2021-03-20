@@ -1,68 +1,50 @@
-import React, { useEffect } from 'react';
-import { Switch, Route, Link } from 'react-router-dom';
-import { auth, createUserProfileDocument } from '../firebase/firebaseClient';
-import { setCurrentUser } from '../redux/user/user.actions';
-import { Provider } from 'react-redux';
-import { connect } from 'react-redux';
-import store from '../redux/store';
+import React, {useEffect} from 'react';
+import {Switch, Route, Redirect} from 'react-router-dom';
+import {authStateCheck} from '../redux/user/user.actions';
+import {connect} from 'react-redux';
 import Layout from '../layout/Layout';
-import Login from '../components/Login/Login';
+import SignIn from "../components/Auth/SignIn/SignIn";
+import SignUp from "../components/Auth/SignUp/SignUp";
 import './App.scss';
 
 const App = (props) => {
+  const {isAuth, authStateCheck} = props;
+
   useEffect(() => {
-    auth.onAuthStateChanged(async (userAuth) => {
-      if (userAuth) {
-        const userRef = await createUserProfileDocument(userAuth);
+    authStateCheck();
+  }, [authStateCheck]);
 
-        userRef.onSnapshot((snapShot) => {
-          props.setCurrentUser({
-            id: snapShot.id,
-            ...snapShot.data(),
-          });
-        });
-      }
-      props.setCurrentUser(userAuth);
-    });
-  }, []);
+  let routes = (
+    <>
+      <Switch>
+        <Route path="/sign-in" component={SignIn}/>
+        <Route path="/sign-up" component={SignUp}/>
+        <Redirect to="/"/>
+      </Switch>
+    </>
+  );
 
-  // TODO dodac logike czy user jest zalogowany jesli nie renderujemy ponizsze komponenty
-  // let routes = (
-  //   <Switch>
-  //     <Route path="/login" component={Login}/>
-  //     <Route path="/register" component={Register}/>
-  //     <Redirect to="/"/>
-  //   </Switch>
-  // );
-
-  // TODO jesli user jest zalogowany czyli token jest zapisany renderujemy ponizsze komponenty
-  // if (props.isAuth) {
-  //   routes = (
-  //     <Switch>
-  //       <Route path="/diary" component={Diary}/>
-  //       <Route path="/big-six" render={(props) => <BigSix {...props}/>}/>
-  //       <Route path="/add-training" render={(props) => <AddTraining {...props}/>}/>
-  //       <Route path="/logout" component={Logout}/>
-  //       <Redirect to='/diary'/>
-  //       <Route component={NotFound}/>
-  //     </Switch>
-  //   );
-  // }
+  if (isAuth) {
+    routes = (
+      <>
+        <Switch>
+          <h1>Jesteś zalogowany i tutaj będzie kalendarz itp...</h1>
+        </Switch>
+      </>
+    );
+  }
 
   return (
     <>
-      {/*<Layout>*/}
-      {/*  {routes}*/}
-      {/*</Layout>*/}
       <Layout>
-        <Login />
+        {routes}
       </Layout>
     </>
   );
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  setCurrentUser: (user) => dispatch(setCurrentUser(user)),
+const mapStateToProps = (state) => ({
+  isAuth: state.user.currentUser !== null
 });
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, {authStateCheck})(App);

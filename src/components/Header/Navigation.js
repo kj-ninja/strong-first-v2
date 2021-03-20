@@ -1,12 +1,10 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { auth } from '../../firebase/firebaseClient';
+import { auth } from '../../api/firebase/firebaseClient';
 import { connect } from 'react-redux';
 import './Navigation.scss';
 
-const Navigation = ({ currentUser }) => {
-  //
+const Navigation = ({ isAuth }) => {
 
   let links = (
     <ul className='navigation'>
@@ -19,7 +17,7 @@ const Navigation = ({ currentUser }) => {
     </ul>
   );
 
-  if (currentUser) {
+  if (isAuth) {
     links = (
       <ul className='navigation'>
         <li className='navigation__item'>
@@ -38,7 +36,7 @@ const Navigation = ({ currentUser }) => {
 };
 
 const mapStateToProps = (state) => ({
-  currentUser: state.user.currentUser,
+  isAuth: state.user.currentUser !== null
 });
 
 export default connect(mapStateToProps)(Navigation);

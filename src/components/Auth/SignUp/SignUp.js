@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import {
   auth,
   createUserProfileDocument,
-} from '../../../firebase/firebaseClient';
+} from '../../../api/firebase/firebaseClient';
 import Input from '../../shared/Input/Input';
 import Button from '../../shared/Button/Button';
-import './Sign-up.scss';
+import './SignUp.scss';
 
 const SignUp = () => {
   const [userCredentials, setUserCredentials] = useState({
@@ -29,8 +29,6 @@ const SignUp = () => {
         password
       );
 
-      await createUserProfileDocument(user, { displayName });
-
       setUserCredentials({
         ...userCredentials,
         displayName: '',
@@ -38,6 +36,8 @@ const SignUp = () => {
         password: '',
         confirmPassword: '',
       });
+
+      await createUserProfileDocument(user, { displayName });
     } catch (error) {
       console.error(error);
     }
@@ -60,7 +60,7 @@ const SignUp = () => {
           label='Display Name'
           value={displayName}
           onChange={handleChange}
-          // required
+          required
         />
         <Input
           name='email'
@@ -68,7 +68,7 @@ const SignUp = () => {
           label='Email'
           value={email}
           onChange={handleChange}
-          // required
+          required
         />
 
         <Input
@@ -77,15 +77,15 @@ const SignUp = () => {
           label='Password'
           value={password}
           onChange={handleChange}
-          // required
+          required
         />
         <Input
           name='confirmPassword'
           type='password'
-          label='Potwierdz hasło '
+          label='Confirm Password '
           value={confirmPassword}
           onChange={handleChange}
-          // required
+          required
         />
         <div className='sign-in__buttons'>
           <Button value='submit'>Załóż konto</Button>
