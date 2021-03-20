@@ -15,22 +15,16 @@ const App = (props) => {
   }, [authStateCheck]);
 
   let routes = (
-    <>
-      <Switch>
-        <Route path="/sign-in" component={SignIn}/>
-        <Route path="/sign-up" component={SignUp}/>
-        <Redirect to="/"/>
-      </Switch>
-    </>
+    <Switch>
+      <Route path="/sign-in" component={SignIn}/>
+      <Route path="/sign-up" component={SignUp}/>
+      <Redirect to="/"/>
+    </Switch>
   );
 
   if (isAuth) {
     routes = (
-      <>
-        <Switch>
-          <h1>Jesteś zalogowany i tutaj będzie kalendarz itp...</h1>
-        </Switch>
-      </>
+      <h1>Jesteś zalogowany i tutaj będzie kalendarz itp...</h1>
     );
   }
 
