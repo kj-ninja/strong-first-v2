@@ -1,46 +1,44 @@
-import React from 'react';
-import {
-  Switch,
-  Route,
-} from "react-router-dom";
+import React, {useEffect} from 'react';
+import {Switch, Route, Redirect} from 'react-router-dom';
+import {authStateCheck} from '../redux/user/user.actions';
+import {connect} from 'react-redux';
+import Layout from '../layout/Layout';
+import SignIn from "../components/Auth/SignIn/SignIn";
+import SignUp from "../components/Auth/SignUp/SignUp";
 import './App.scss';
-import Layout from "../layout/Layout";
 
-const App = () => {
+const App = (props) => {
+  const {isAuth, authStateCheck} = props;
 
-  // TODO dodac logike czy user jest zalogowany jesli nie renderujemy ponizsze komponenty
-  // let routes = (
-  //   <Switch>
-  //     <Route path="/login" component={Login}/>
-  //     <Route path="/register" component={Register}/>
-  //     <Redirect to="/"/>
-  //   </Switch>
-  // );
+  useEffect(() => {
+    authStateCheck();
+  }, [authStateCheck]);
 
-  // TODO jesli user jest zalogowany czyli token jest zapisany renderujemy ponizsze komponenty
-  // if (props.isAuth) {
-  //   routes = (
-  //     <Switch>
-  //       <Route path="/diary" component={Diary}/>
-  //       <Route path="/big-six" render={(props) => <BigSix {...props}/>}/>
-  //       <Route path="/add-training" render={(props) => <AddTraining {...props}/>}/>
-  //       <Route path="/logout" component={Logout}/>
-  //       <Redirect to='/diary'/>
-  //       <Route component={NotFound}/>
-  //     </Switch>
-  //   );
-  // }
+  let routes = (
+    <Switch>
+      <Route path="/sign-in" component={SignIn}/>
+      <Route path="/sign-up" component={SignUp}/>
+      <Redirect to="/"/>
+    </Switch>
+  );
+
+  if (isAuth) {
+    routes = (
+      <h1>Jesteś zalogowany i tutaj będzie kalendarz itp...</h1>
+    );
+  }
 
   return (
     <>
-      {/*<Layout>*/}
-      {/*  {routes}*/}
-      {/*</Layout>*/}
       <Layout>
-
+        {routes}
       </Layout>
     </>
   );
-}
+};
 
-export default App;
+const mapStateToProps = (state) => ({
+  isAuth: state.user.currentUser !== null
+});
+
+export default connect(mapStateToProps, {authStateCheck})(App);

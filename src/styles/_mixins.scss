@@ -1,0 +1,13 @@
+@import './variables';
+
+@mixin mobile() {
+  @media (max-width: 576px) {
+    @content;
+  }
+}
+
+@mixin shrinkLabel {
+  top: -1.4rem;
+  font-size: 1.2rem;
+  color: $black;
+}

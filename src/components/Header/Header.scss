@@ -1,10 +1,13 @@
+@import '../../styles/mixins';
+
 .header {
   border-bottom: 1px solid black;
 
   &__container {
     width: 100%;
-    max-width: 125rem;
+    max-width: 110rem;
     margin: 0 auto;
+    padding: 0 5%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -12,5 +15,9 @@
 
   &__logo {
     font-size: 2.3rem;
+
+    @include mobile() {
+      font-size: 2rem;
+    }
   }
 }
