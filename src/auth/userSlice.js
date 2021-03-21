@@ -8,11 +8,10 @@ export const userSlice = createSlice({
   },
   reducers: {
     setCurrentUser: (state, action) => {
-      console.log('payload ', action.payload);
       state.currentUser = action.payload;
     },
     handleLogout: (state) => {
-      state.isAuth = false;
+      state.currentUser = null;
     },
   },
 });
@@ -23,7 +22,6 @@ export default userSlice.reducer;
 export const authStateCheck = () => dispatch => {
   auth.onAuthStateChanged(async (userAuth) => {
     if (userAuth) {
-      console.log('jest user');
       const userRef = await createUserProfileDocument(userAuth);
 
       userRef.onSnapshot((snapShot) => {
@@ -33,7 +31,6 @@ export const authStateCheck = () => dispatch => {
         }));
       });
     }
-    console.log('nie ma usera');
-    dispatch(setCurrentUser(userAuth));
+    dispatch(setCurrentUser(null));
   });
 };
