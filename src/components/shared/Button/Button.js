@@ -1,10 +1,10 @@
 import React from 'react';
 import './Button.scss';
 
-const Button = ({children, effectNumber, ...otherProps}) => {
+const Button = ({children, effectName, ...otherProps}) => {
     return (
-        <button className='button effect' {...otherProps}>
-             <span className={`${effectNumber ? effectNumber : ''}  button__span`}>
+        <button className={`button effect ${effectName ? effectName : ''} `}{...otherProps}>
+             <span className='button__span'>
                  {children}
              </span>
         </button>
