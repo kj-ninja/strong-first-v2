@@ -1,12 +1,12 @@
 @import "src/styles/variables";
 @import "src/styles/mixins";
 
-.container {
+.input-container {
   position: relative;
-  margin: 4.5rem 0;
+  margin: 4.5rem 0 1rem 0;
 
-  &__input {
-    background: $white ;
+  &__custom-input {
+    background: $white;
     color: $secondary-font-color;
     font-size: 1.8rem;
     padding: 1rem 1rem 1rem 0.5rem;
@@ -40,7 +40,13 @@
     top: 1rem;
     transition: 300ms ease all;
   }
+
   &__shrink {
     @include shrinkLabel();
+  }
+
+  &__error {
+    font-size: 1.2rem;
+    color: $red;
   }
 }

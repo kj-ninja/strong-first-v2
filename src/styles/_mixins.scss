@@ -1,13 +1,31 @@
 @import './variables';
 
-@mixin mobile() {
-  @media (max-width: 576px) {
-    @content;
-  }
-}
+ @mixin mobile() {
+   @media (max-width: 576px) {
+     @content;
+   }
+ }
 
-@mixin shrinkLabel {
-  top: -1.4rem;
-  font-size: 1.2rem;
-  color: $black;
-}
+ @mixin shrinkLabel {
+   top: -1.4rem;
+   font-size: 1.2rem;
+   color: $black;
+ }
+
+ @mixin buttonEffect($color) {
+   border: 1px solid $color;
+   box-shadow: 0 0 0 1px $color inset;
+   background-color: $color;
+
+   &:hover {
+     border: 1px solid $color;
+     background-color: $white;
+     box-shadow: 0 0 0 1px $background-calendar inset;
+     color: $color;
+
+     span {
+       transition: all 0.2s ease-out;
+       z-index: 2;
+     }
+   }
+ }

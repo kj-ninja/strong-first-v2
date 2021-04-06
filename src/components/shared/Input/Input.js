@@ -1,19 +1,35 @@
 import React from 'react';
 import './Input.scss';
 
-const Input = ({label, handleChange, ...otherProps }) => {
+const Input = ({
+                   field,
+                   label,
+                   name,
+                   id,
+                   value,
+                   handleChange,
+                   form: {touched, errors},
+                   ...props
+               }) => {
     return (
-        <div className='container'>
-            <input className='container__input' onChange={handleChange} {...otherProps} />
+        <div className='input-container'>
+            <input className='input-container__custom-input' onChange={handleChange} {...props} id={id}
+                   type="text"
+                   {...field}
+                   {...props} />
             {label ? (
                 <label
                     className={`${
-                        otherProps.value.length ? 'container__shrink' : ''
-                    }  container__label`}
+                        value.length ? 'input-container__shrink' : ''
+                    }  input-container__label`}
                 >
                     {label}
                 </label>
             ) : null}
+            {touched[field.name] && errors[field.name] && (
+                <span className="input-container__error">
+                    {errors[field.name]}
+                </span>)}
         </div>
     );
 };

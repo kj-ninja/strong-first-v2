@@ -1,64 +1,74 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {auth, signInWithGoogle} from '../../../api/firebase/firebaseClient';
 import Input from '../../shared/Input/Input';
 import Button from '../../shared/Button/Button';
-import './SignIn.scss';
+import * as Yup from "yup";
+import '../Form.scss';
+import {Formik, Form, Field} from 'formik';
+
+const SignInSchema = Yup.object().shape({
+    email: Yup.string()
+        .typeError('Proszę podać poprawny adres email')
+        .required('Pole obowiązkowe')
+        .email('Proszę podać poprawny adres email')
+        .min(6, 'Minimum 6 znaków'),
+    password: Yup.string()
+        .min(6, 'Minimum 6 znaków')
+        .max(40, 'Maksymalnie 30 znaków')
+        .required('Pole obowiązkowe'),
+});
 
 const SignIn = () => {
-  const [userCredentials, setUserCredentials] = useState({
-    displayName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-  });
-
-  const {email, password} = userCredentials;
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    try {
-      setUserCredentials({...userCredentials, email: '', password: ''});
-      await auth.signInWithEmailAndPassword(email, password);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleChange = (event) => {
-    const {name, value} = event.target;
-
-    setUserCredentials({...userCredentials, [name]: value});
-  };
-
-  return (
-    <div className='sign-in'>
-      <h2>It great to have you back on your next training session</h2>
-      <p>Sign in and let's do this</p>
-      <form onSubmit={handleSubmit}>
-        <Input
-          name='email'
-          type='email'
-          label='Email'
-          value={email}
-          onChange={handleChange}
-          required
-        />
-        <Input
-          name='password'
-          type='password'
-          label='Password'
-          value={password}
-          onChange={handleChange}
-          required
-        />
-        <div className='sign-in__buttons'>
-          <Button type='submit'>Zaloguj się</Button>
-          <Button onClick={signInWithGoogle}>Zaloguj z Google</Button>
+    return (
+        <div className='form-container'>
+            <h2>Dobrze dziku! Jedziemy z tym treningiem</h2>
+            <p>Jeszcze tylko się zaloguj i możemy zaczynnać</p>
+            <Formik
+                initialValues={{
+                    email: '',
+                    password: ''
+                }}
+                validationSchema={SignInSchema}
+                onSubmit={async (values, {setSubmitting}) => {
+                    try {
+                        await auth.signInWithEmailAndPassword(values.email, values.password);
+                    } catch (error) {
+                        console.log(error);
+                    }
+                    setSubmitting(false);
+                }}
+            >
+                {({
+                      values, handleChange,
+                  }) => (
+                    <Form>
+                        <Field
+                            label="E-mail"
+                            id="emailId"
+                            name="email"
+                            type="email"
+                            component={Input}
+                            value={values.email}
+                            onChange={handleChange}
+                        />
+                        <Field
+                            label='Hasło'
+                            id='passwordId'
+                            name='password'
+                            type='password'
+                            component={Input}
+                            value={values.password}
+                            onChange={handleChange}
+                        />
+                        <div className='form-container__buttons'>
+                            <Button type='submit'>Zaloguj się</Button>
+                            <Button onClick={signInWithGoogle} buttonClass={"google-class"}>Zaloguj z Google</Button>
+                        </div>
+                    </Form>
+                )}
+            </Formik>
         </div>
-      </form>
-    </div>
-  );
+    );
 };
 
 export default SignIn;
