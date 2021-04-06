@@ -1,4 +1,4 @@
-.sign-up {
+.form-container {
   width: 30vw;
   margin: 5rem auto 0;
   display: flex;
@@ -8,9 +8,11 @@
   h2 {
     text-align: center;
   }
+
   p {
     font-size: 2rem;
     margin: 2rem auto;
+    text-align: center;
   }
 
   &__buttons {

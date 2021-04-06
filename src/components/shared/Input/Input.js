@@ -12,22 +12,22 @@ const Input = ({
                    ...props
                }) => {
     return (
-        <div className='container'>
-            <input className='container__input' onChange={handleChange} {...props} id={id}
+        <div className='input-container'>
+            <input className='input-container__custom-input' onChange={handleChange} {...props} id={id}
                    type="text"
                    {...field}
                    {...props} />
             {label ? (
                 <label
                     className={`${
-                        value.length ? 'container__shrink' : ''
-                    }  container__label`}
+                        value.length ? 'input-container__shrink' : ''
+                    }  input-container__label`}
                 >
                     {label}
                 </label>
             ) : null}
             {touched[field.name] && errors[field.name] && (
-                <span className="container__error-class">
+                <span className="input-container__error">
                     {errors[field.name]}
                 </span>)}
         </div>

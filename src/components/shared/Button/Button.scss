@@ -1,7 +1,7 @@
 @import './src/styles/mixins';
 @import './src/styles/variables';
 
-.button {
+.custom-button {
   width: 40%;
   height: 5rem;
   position: relative;
@@ -10,8 +10,12 @@
   line-height: 1.2rem;
   font-size: 0.8rem;
   cursor: pointer;
+  color: #fff;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+  @include buttonEffect($black);
 
-  &__span {
+  &__text {
     font-size: 1.2rem;
   }
 
@@ -23,22 +27,14 @@
   }
 }
 
-.effect {
-  color: #fff;
-  overflow: hidden;
-  position: relative;
-  transition: all 0.3s ease-in-out;
-  @include buttonEffect($black)
-}
-
-.google-effect {
+.google-class {
   @include buttonEffect($googleBlue)
 }
 
-.accept-effect {
+.accept-class {
   @include buttonEffect($green)
 }
 
-.danger-effect {
+.danger-class {
   @include buttonEffect($red)
 }
