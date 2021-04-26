@@ -1,0 +1,10 @@
+MonthPicker:
+
+* zamienic miesiace na jezyk polski
+* ostylowac wrapper do monthpickera
+* stworzyc logike do wyswietlenia komponentu z wyborem lat jako select
+
+Calendar:
+
+* ogarnac metode do wybierania dni + zaznaczenie pola (style)
+
