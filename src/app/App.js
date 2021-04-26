@@ -1,18 +1,19 @@
 import React, {useEffect} from 'react';
 import {Switch, Route, Redirect} from 'react-router-dom';
-import {authStateCheck} from '../redux/user/user.actions';
-import {connect} from 'react-redux';
+import {authStateCheck} from "../auth/userSlice";
+import {useSelector, useDispatch} from "react-redux";
 import Layout from '../layout/Layout';
-import SignIn from "../components/Auth/SignIn/SignIn";
-import SignUp from "../components/Auth/SignUp/SignUp";
+import SignIn from "../auth/SignIn";
+import SignUp from "../auth/SignUp";
 import './App.scss';
 
-const App = (props) => {
-  const {isAuth, authStateCheck} = props;
+const App = () => {
+  const dispatch = useDispatch();
+  const isAuth = useSelector((state) => state.user.currentUser !== null);
 
   useEffect(() => {
-    authStateCheck();
-  }, [authStateCheck]);
+    dispatch(authStateCheck());
+  }, [dispatch]);
 
   let routes = (
     <Switch>
@@ -37,8 +38,4 @@ const App = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  isAuth: state.user.currentUser !== null
-});
-
-export default connect(mapStateToProps, {authStateCheck})(App);
+export default App;
