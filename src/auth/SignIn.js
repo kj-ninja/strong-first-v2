@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import {auth, signInWithGoogle} from '../../../api/firebase/firebaseClient';
-import Input from '../../shared/Input/Input';
-import Button from '../../shared/Button/Button';
+import {auth, signInWithGoogle} from '../api/firebase/firebaseClient';
+import Input from "../components/shared/Input/Input";
+import Button from "../components/shared/Button/Button";
 import './SignIn.scss';
 
 const SignIn = () => {

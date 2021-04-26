@@ -1,10 +1,11 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { auth } from '../../api/firebase/firebaseClient';
-import { connect } from 'react-redux';
+import {useSelector} from "react-redux";
 import './Navigation.scss';
 
-const Navigation = ({ isAuth }) => {
+const Navigation = () => {
+  const isAuth = useSelector((state) => state.user.currentUser !== null);
 
   let links = (
     <ul className='navigation'>
@@ -35,8 +36,4 @@ const Navigation = ({ isAuth }) => {
   return <nav>{links}</nav>;
 };
 
-const mapStateToProps = (state) => ({
-  isAuth: state.user.currentUser !== null
-});
-
-export default connect(mapStateToProps)(Navigation);
+export default Navigation;
