@@ -32,7 +32,6 @@ export const calendarSLice = createSlice({
       state.calendarStructure[monthIndex].dates[dayIndex].isPicked = true;
     },
     setCalendarStructure(state, {payload}) {
-      console.log('calendar data: ', payload);
       state.calendarStructure = [
         ...state.calendarStructure,
         payload
